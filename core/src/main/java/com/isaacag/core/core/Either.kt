@@ -1,4 +1,4 @@
-package com.isaacag.core
+package com.isaacag.core.core
 
 //Either: https://www.adictosaltrabajo.com/2019/07/04/either-en-kotlin/
 sealed class Either<out L, out R> {
