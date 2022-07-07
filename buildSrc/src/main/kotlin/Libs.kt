@@ -8,6 +8,10 @@ object Libs {
             "org.jetbrains.kotlinx:kotlinx-coroutines-test:" +
             Versions.org_jetbrains_kotlinx_kotlinx_coroutines
 
+    const val kotlinx_coroutines_core: String =
+        "org.jetbrains.kotlinx:kotlinx-coroutines-core:" +
+                Versions.org_jetbrains_kotlinx_kotlinx_coroutines
+
     /**
      * https://developer.android.com/jetpack/androidx/releases/swiperefreshlayout
      */
