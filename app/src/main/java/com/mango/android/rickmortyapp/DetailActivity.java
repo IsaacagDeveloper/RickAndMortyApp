@@ -8,7 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
-import com.isaacag.domain.models.Character;
+import com.mango.android.domain.models.Character;
 
 import org.json.JSONException;
 import org.json.JSONObject;
