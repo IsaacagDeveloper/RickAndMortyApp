@@ -1,7 +1,7 @@
-package com.isaacag.core.di
+package com.isaacag.data.di
 
-import com.isaacag.core.core.CoroutineDispatcherProvider
-import com.isaacag.core.core.DefaultCoroutineDispatcherProvider
+import com.isaacag.data.dispatcher.CoroutineDispatcherProvider
+import com.isaacag.data.dispatcher.DefaultCoroutineDispatcherProvider
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
