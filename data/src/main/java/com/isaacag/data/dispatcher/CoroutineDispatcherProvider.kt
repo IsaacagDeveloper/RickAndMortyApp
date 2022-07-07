@@ -1,4 +1,4 @@
-package com.isaacag.core.core
+package com.isaacag.data.dispatcher
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
