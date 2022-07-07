@@ -1,11 +1,10 @@
 package com.isaacag.rickandmorty_network.di
 
-import com.isaacag.rickandmorty_network.RickAndMortyService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import retrofit2.Retrofit
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
@@ -14,7 +13,9 @@ object RickAndMortyUrlModule {
 
     @Provides
     @Singleton
-    fun provideOompaLoompaApi(retrofit: Retrofit): RickAndMortyService =
-        retrofit.create(RickAndMortyService::class.java)
+    @Named("baseUrl")
+    fun provideBaseUrl(): String {
+        return "https://rickandmortyapi.com/api/"
+    }
 
 }
