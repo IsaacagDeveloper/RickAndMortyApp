@@ -13,7 +13,6 @@ class CharactersMapper {
             name = characterApiResponse.name,
             status = characterApiResponse.status,
             species = characterApiResponse.species,
-            type = characterApiResponse.type,
             gender = characterApiResponse.gender,
             origin = characterApiResponse.origin.name,
             location = characterApiResponse.location.name,
