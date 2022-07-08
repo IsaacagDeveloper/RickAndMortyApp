@@ -18,7 +18,7 @@ class CharactersMapper {
             origin = characterApiResponse.origin.name,
             location = characterApiResponse.location.name,
             image = characterApiResponse.image,
-            created = characterApiResponse.created,
+            created = characterApiResponse.created
         )
 
 }

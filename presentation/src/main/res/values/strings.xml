@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Rick &amp; Morty App</string>
+
+    <!-- Error Messages -->
+    <string name="something_wrong">Something went wrong, please, try again.</string>
+    <string name="empty_list">We haven\'t obtained characters, maybe something has happened in the laboratory.</string>
+
+</resources>
