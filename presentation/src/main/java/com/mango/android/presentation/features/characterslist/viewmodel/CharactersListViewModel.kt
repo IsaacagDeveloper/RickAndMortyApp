@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mango.android.core.core.FIRST_PAGE
 import com.mango.android.core.core.fold
 import com.mango.android.domain.models.Character
 import com.mango.android.domain.repositories.RickAndMortyCharactersRepository
@@ -15,6 +16,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+private const val CHARACTERS_LIST_ID = 1
+
 @HiltViewModel
 class CharactersListViewModel @Inject constructor(
     private val repository: RickAndMortyCharactersRepository,
@@ -25,9 +28,37 @@ class CharactersListViewModel @Inject constructor(
     val charactersListLiveData: LiveData<List<CharacterUIModel>>
         get() = _charactersListLiveData
 
-    //TODO refactor when apply pagination
-    fun userRequireCharactersList() = viewModelScope.launch {
-        repository.getCharactersList(1)
+    private val _currentPageLiveData = MutableLiveData<Int>()
+    val currentPageLiveData: LiveData<Int>
+        get() = _currentPageLiveData
+
+    init {
+        getCurrentPage()
+    }
+
+    fun getCurrentPage() = viewModelScope.launch {
+            repository.getCurrentPage(CHARACTERS_LIST_ID)
+                .fold(::handleFailure, ::handleCurrentPage)
+        }
+
+    private fun handleCurrentPage(currentPage: Int) {
+        _currentPageLiveData.postValue(currentPage)
+    }
+
+    fun userRequireGetNewCharacters() {
+        currentPageLiveData.value?.let {
+            getCharacters(it.plus(1))
+        } ?: run {
+            userRequireRefreshCharactersList()
+        }
+    }
+
+    fun userRequireRefreshCharactersList() {
+        getCharacters(FIRST_PAGE)
+    }
+
+    fun getCharacters(page: Int) = viewModelScope.launch {
+        repository.getCharactersList(CHARACTERS_LIST_ID, page)
             .fold(::handleFailure, ::handleCharactersList)
     }
 
@@ -37,6 +68,7 @@ class CharactersListViewModel @Inject constructor(
                 charactersUIMapper.fromCharacterDomainModelToCharacterUIModel(it)
             }
         )
+        getCurrentPage()
     }
 
 }

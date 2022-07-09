@@ -4,4 +4,5 @@ dependencies {
     implementation project(Modules.core)
     implementation project(Modules.domain)
     implementation project(Modules.rickandmortyNetwork)
+    implementation project(Modules.rickandmortyCache)
 }

@@ -11,6 +11,8 @@ buildscript {
         classpath(Libs.kotlin_gradle_plugin)
         classpath(Libs.navigation_safe_args_gradle_plugin)
         classpath(Libs.hilt_android_gradle_plugin)
+        //TODO check if with this success
+        //classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.20")
     }
 }
 

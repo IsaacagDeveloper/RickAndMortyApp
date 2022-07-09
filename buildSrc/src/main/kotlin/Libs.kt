@@ -99,6 +99,21 @@ object Libs {
     const val hilt_compiler: String = "androidx.hilt:hilt-compiler:" + Versions.androidx_hilt
 
     /**
+     * https://developer.android.com/topic/libraries/architecture/index.html
+     */
+    const val room_compiler: String = "androidx.room:room-compiler:" + Versions.androidx_room
+
+    /**
+     * https://developer.android.com/topic/libraries/architecture/index.html
+     */
+    const val room_ktx: String = "androidx.room:room-ktx:" + Versions.androidx_room
+
+    /**
+     * https://developer.android.com/topic/libraries/architecture/index.html
+     */
+    const val room_runtime: String = "androidx.room:room-runtime:" + Versions.androidx_room
+
+    /**
      * https://developer.android.com/testing
      */
     const val androidx_test_core_ktx: String = "androidx.test:core-ktx:" +

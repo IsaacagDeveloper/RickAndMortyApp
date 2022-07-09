@@ -53,7 +53,8 @@ class CharactersListFragment : Fragment(R.layout.fragment_characters_list) {
 
     private fun setUpCharactersRecyclerView() {
         charactersListAdapter = CharactersListAdapter(
-            characterClickListener = ::onCharacterClicked
+            characterClickListener = ::onCharacterClicked,
+            closeLastItemListener = ::closeToEndOfList
         )
 
         context?.let {
@@ -66,13 +67,17 @@ class CharactersListFragment : Fragment(R.layout.fragment_characters_list) {
 
     private fun setUpRefreshingCharacters() {
         fragmentCharactersListBinding.swipeRefreshLayout.setOnRefreshListener {
-            charactersListViewModel.userRequireCharactersList()
+            charactersListViewModel.userRequireRefreshCharactersList()
         }
     }
 
     private fun loadCharacters() {
         fragmentCharactersListBinding.progressBar.visible()
-        charactersListViewModel.userRequireCharactersList()
+        charactersListViewModel.currentPageLiveData.value?.let {
+            charactersListViewModel.getCharacters(it)
+        } ?: run {
+            charactersListViewModel.userRequireGetNewCharacters()
+        }
     }
 
     private fun renderCharactersList(collection: List<CharacterUIModel>?) {
@@ -103,6 +108,10 @@ class CharactersListFragment : Fragment(R.layout.fragment_characters_list) {
 
     private fun onCharacterClicked(characterUIModel: CharacterUIModel) {
         //TODO do when navigation
+    }
+
+    private fun closeToEndOfList() {
+        charactersListViewModel.userRequireGetNewCharacters()
     }
 
     override fun onDestroyView() {
