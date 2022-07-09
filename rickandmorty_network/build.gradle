@@ -1,6 +1,5 @@
 androidModule()
 
 dependencies {
-    implementation Libs.converter_gson
     implementation project(Modules.core)
 }

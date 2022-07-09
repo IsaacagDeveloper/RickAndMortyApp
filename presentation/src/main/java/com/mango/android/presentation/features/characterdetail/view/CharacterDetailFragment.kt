@@ -2,8 +2,11 @@ package com.mango.android.presentation.features.characterdetail.view
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.mango.android.core.core.Failure
 import com.mango.android.domain.models.Character
@@ -23,6 +26,9 @@ class CharacterDetailFragment : Fragment(R.layout.fragment_character_detail) {
     private var _fragmentCharacterDetailBinding: FragmentCharacterDetailBinding? = null
     private val fragmentCharacterDetailBinding get() = _fragmentCharacterDetailBinding!!
 
+    //SAFE ARGS
+    private val args: CharacterDetailFragmentArgs by navArgs()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -38,13 +44,23 @@ class CharacterDetailFragment : Fragment(R.layout.fragment_character_detail) {
         val binding = FragmentCharacterDetailBinding.bind(view)
         _fragmentCharacterDetailBinding = binding
 
+        initializeNavigation()
         loadCharacterDetailInformation()
+    }
+
+    private fun initializeNavigation() {
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
+            goBack()
+        }
+    }
+
+    private fun goBack() {
+        this.findNavController().popBackStack()
     }
 
     private fun loadCharacterDetailInformation() {
         fragmentCharacterDetailBinding.progressBar.visible()
-        //TODO send char id when implement navigation
-        characterDetailViewModel.userRequireDetailInformationOfCharacter(1)
+        characterDetailViewModel.userRequireDetailInformationOfCharacter(args.characterIDSelected)
     }
 
     private fun renderCharacter(character: Character?) {
@@ -82,6 +98,7 @@ class CharacterDetailFragment : Fragment(R.layout.fragment_character_detail) {
     private fun handleFailure(failure: Failure?) {
         fragmentCharacterDetailBinding.progressBar.gone()
         fragmentCharacterDetailBinding.root.showSnackBar(getString(R.string.something_wrong))
+        goBack()
     }
 
     override fun onDestroyView() {

@@ -15,4 +15,7 @@
     <string name="something_wrong">Something went wrong, please, try again.</string>
     <string name="empty_list">We haven\'t obtained characters, maybe something has happened in the laboratory.</string>
 
+    <!-- Navigations -->
+    <string name="characters_list_fragment_label">Characters List Fragment</string>
+    <string name="character_detail_fragment_label">Character Detail Fragment</string>
 </resources>
