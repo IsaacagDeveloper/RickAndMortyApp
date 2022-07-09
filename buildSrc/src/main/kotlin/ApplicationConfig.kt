@@ -1,5 +1,5 @@
 object ApplicationConfig {
-    val id = "com.mango.android.rickmortyapp"
+    const val id = "com.mango.android.rickmortyapp"
 
     const val compileSdk = 32
     const val minSdk = 21

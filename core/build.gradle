@@ -1,6 +1,3 @@
 androidModule()
 
-dependencies {
-    implementation Libs.converter_gson
-    implementation Libs.logging_interceptor
-}
+dependencies {}

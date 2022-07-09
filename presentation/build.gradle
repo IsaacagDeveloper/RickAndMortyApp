@@ -8,9 +8,6 @@ dependencies {
     implementation Libs.swipe_refresh_layout
     implementation Libs.glide
     implementation Libs.lifecycle_extensions
-    implementation Libs.appcompat
-    implementation Libs.material
-    implementation Libs.constraintlayout
     implementation project(Modules.domain)
     implementation project(Modules.core)
 }

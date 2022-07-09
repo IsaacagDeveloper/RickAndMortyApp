@@ -22,7 +22,7 @@ class CharacterDetailViewModel @Inject constructor(
     val characterDetailInfoLiveData: LiveData<Character>
         get() = _characterDetailInfoLiveData
 
-    fun userRequireDetailInformationOfCharacter(characterID: Int) = viewModelScope.launch() {
+    fun userRequireDetailInformationOfCharacter(characterID: Int) = viewModelScope.launch {
         repository.getCharacterDetailInformation(characterID)
             .fold(::handleFailure, ::handleCharacterDetailInformationReceived)
     }

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/characters_nav_graph"
+    app:startDestination="@id/charactersListFragment">
+
+    <fragment
+        android:id="@+id/charactersListFragment"
+        android:name="com.mango.android.presentation.features.characterslist.view.CharactersListFragment"
+        android:label="@string/characters_list_fragment_label"
+        tools:layout="@layout/fragment_characters_list">
+
+        <action
+            android:id="@+id/action_CharactersListFragment_to_CharacterDetailFragment"
+            app:destination="@id/characterDetailFragment"
+            app:popUpTo="@id/charactersListFragment"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/characterDetailFragment"
+        android:name="com.mango.android.presentation.features.characterdetail.view.CharacterDetailFragment"
+        android:label="@string/character_detail_fragment_label"
+        tools:layout="@layout/fragment_character_detail">
+
+        <argument
+            android:name="characterIDSelected"
+            app:argType="integer"
+            android:defaultValue="0"/>
+    </fragment>
+
+</navigation>
