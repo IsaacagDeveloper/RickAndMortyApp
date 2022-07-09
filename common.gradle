@@ -70,13 +70,17 @@ ext.androidModule = { isApplication = false ->
 
     dependencies {
         implementation fileTree(dir: "libs", include: ["*.jar"])
-
         /**
          * CORE
          */
         implementation Libs.kotlin_stdlib_jdk7
         implementation Libs.androidx_core_core_ktx
         implementation Libs.kotlinx_coroutines_core
+        implementation Libs.logging_interceptor
+        implementation Libs.converter_gson
+        implementation Libs.appcompat
+        implementation Libs.material
+        implementation Libs.constraintlayout
 
         /**
          * HILT
