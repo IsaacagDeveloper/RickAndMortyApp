@@ -122,4 +122,8 @@ ext.androidModule = { isApplication = false ->
         androidTestImplementation Libs.navigation_testing
         androidTestImplementation Libs.fragment_testing
     }
+
+    kapt {
+        correctErrorTypes true
+    }
 }
