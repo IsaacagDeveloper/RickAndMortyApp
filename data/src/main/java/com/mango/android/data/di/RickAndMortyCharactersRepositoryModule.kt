@@ -2,8 +2,10 @@ package com.mango.android.data.di
 
 import com.mango.android.data.dispatcher.DefaultCoroutineDispatcherProvider
 import com.mango.android.data.mappers.CharactersMapper
+import com.mango.android.data.mappers.CurrentPageMapper
 import com.mango.android.data.repositories.RickAndMortyCharactersRepositoryImpl
 import com.mango.android.domain.repositories.RickAndMortyCharactersRepository
+import com.mango.android.rickandmorty_cache.source.RickAndMortyCacheDataSource
 import com.mango.android.rickandmorty_network.source.RickAndMortyNetworkDataSource
 import dagger.Module
 import dagger.Provides
@@ -16,9 +18,12 @@ object RickAndMortyCharactersRepositoryModule {
 
     @Provides
     fun getRickAndMortyCharactersRepository(
-        rickAndMortyNetworkDataSource: RickAndMortyNetworkDataSource
+        rickAndMortyNetworkDataSource: RickAndMortyNetworkDataSource,
+        rickAndMortyCacheDataSource: RickAndMortyCacheDataSource
     ): RickAndMortyCharactersRepository = RickAndMortyCharactersRepositoryImpl(
         rickAndMortyNetworkDataSource = rickAndMortyNetworkDataSource,
+        rickAndMortyCacheDataSource = rickAndMortyCacheDataSource,
+        currentPageMapper = CurrentPageMapper(),
         charactersMapper = CharactersMapper(),
         coroutineDispatcher = DefaultCoroutineDispatcherProvider()
     )

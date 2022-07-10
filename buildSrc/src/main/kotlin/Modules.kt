@@ -4,5 +4,6 @@ object Modules {
     const val core = ":core"
     const val presentation = ":presentation"
     const val rickandmortyNetwork = ":rickandmorty_network"
+    const val rickandmortyCache = ":rickandmorty_cache"
     const val data = ":data"
 }

@@ -7,8 +7,11 @@ import androidx.recyclerview.widget.ListAdapter
 import com.mango.android.presentation.databinding.ItemCharactersListBinding
 import com.mango.android.presentation.features.characterslist.models.CharacterUIModel
 
+private const val ITEMS_LIST_TO_CHECK_IF_USER_IS_CLOSE_TO_THE_END_OF_LIST = 5
+
 class CharactersListAdapter(
-    private val characterClickListener: ((CharacterUIModel) -> Unit)
+    private val characterClickListener: ((CharacterUIModel) -> Unit),
+    private val closeLastItemListener: (() -> Unit)
 ) : ListAdapter<CharacterUIModel, CharactersListViewHolder>(DIFF_CALLBACK) {
 
     companion object {
@@ -32,6 +35,9 @@ class CharactersListAdapter(
             with(getItem(position)){
                 bind(this)
                 itemView.setOnClickListener { characterClickListener.invoke(this) }
+                if ((currentList.size - ITEMS_LIST_TO_CHECK_IF_USER_IS_CLOSE_TO_THE_END_OF_LIST) == position) {
+                    closeLastItemListener.invoke()
+                }
             }
         }
     }
