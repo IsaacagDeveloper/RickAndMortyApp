@@ -107,7 +107,7 @@ val fakeCurrentPageDbModel by lazy {
     )
 }
 
-const val FAKE_CHARACTERS_LIST_ID = 1434
+const val FAKE_CHARACTERS_LIST_ID = 1
 const val FAKE_CURRENT_PAGE = 1
 
 /**

@@ -12,7 +12,6 @@ import javax.inject.Singleton
 object CharacterUIMapperModule {
 
     @Provides
-    @Singleton
     fun providesCharacterUIMapper(): CharactersUIMapper =
         CharactersUIMapper()
 

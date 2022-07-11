@@ -1,6 +1,6 @@
 package com.mango.android.data.di
 
-import com.mango.android.core.dispatcher.DefaultCoroutineDispatcherProvider
+import com.mango.android.core.dispatcher.CoroutineDispatcherProvider
 import com.mango.android.data.mappers.CharactersMapper
 import com.mango.android.data.mappers.CurrentPageMapper
 import com.mango.android.data.repositories.RickAndMortyCharactersRepositoryImpl
@@ -19,13 +19,16 @@ object RickAndMortyCharactersRepositoryModule {
     @Provides
     fun getRickAndMortyCharactersRepository(
         rickAndMortyNetworkDataSource: RickAndMortyNetworkDataSource,
-        rickAndMortyCacheDataSource: RickAndMortyCacheDataSource
+        rickAndMortyCacheDataSource: RickAndMortyCacheDataSource,
+        currentPageMapper: CurrentPageMapper,
+        charactersMapper: CharactersMapper,
+        coroutineDispatcherProvider: CoroutineDispatcherProvider
     ): RickAndMortyCharactersRepository = RickAndMortyCharactersRepositoryImpl(
         rickAndMortyNetworkDataSource = rickAndMortyNetworkDataSource,
         rickAndMortyCacheDataSource = rickAndMortyCacheDataSource,
-        currentPageMapper = CurrentPageMapper(),
-        charactersMapper = CharactersMapper(),
-        coroutineDispatcher = DefaultCoroutineDispatcherProvider()
+        currentPageMapper = currentPageMapper,
+        charactersMapper = charactersMapper,
+        coroutineDispatcher = coroutineDispatcherProvider
     )
 
 }

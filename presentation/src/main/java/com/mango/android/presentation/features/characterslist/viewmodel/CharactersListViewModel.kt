@@ -20,7 +20,7 @@ import javax.inject.Inject
 class CharactersListViewModel @Inject constructor(
     private val repository: RickAndMortyCharactersRepository,
     private val charactersUIMapper: CharactersUIMapper
-): ViewModel(), FailureViewModel by FailureViewModelImpl() {
+) : ViewModel(), FailureViewModel by FailureViewModelImpl() {
 
     private val _charactersListLiveData = MutableLiveData<List<CharacterUIModel>>()
     val charactersListLiveData: LiveData<List<CharacterUIModel>>
@@ -57,11 +57,19 @@ class CharactersListViewModel @Inject constructor(
     }
 
     private fun handleCharactersList(collection: List<Character>) {
-        _charactersListLiveData.postValue(
-            collection.map {
-                charactersUIMapper.fromCharacterDomainModelToCharacterUIModel(it)
-            }
-        )
+        if (charactersListLiveData.value != null) {
+            _charactersListLiveData.postValue(
+                _charactersListLiveData.value?.plus(collection.map {
+                    charactersUIMapper.fromCharacterDomainModelToCharacterUIModel(it)
+                })
+            )
+        } else {
+            _charactersListLiveData.postValue(
+                collection.map {
+                    charactersUIMapper.fromCharacterDomainModelToCharacterUIModel(it)
+                }
+            )
+        }
     }
 
 }

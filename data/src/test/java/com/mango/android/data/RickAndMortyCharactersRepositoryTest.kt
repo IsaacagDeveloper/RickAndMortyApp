@@ -86,7 +86,7 @@ class RickAndMortyCharactersRepositoryTest {
         val result = repository.getCurrentPage(FAKE_CHARACTERS_LIST_ID)
 
         //Then
-        result shouldBeEqualTo Either.Right(fakeCurrentPageDbModel.currentPage)
+        result shouldBeEqualTo Either.Right(currentPageMapper.fromCurrentPageDbModelToPage(fakeCurrentPageDbModel))
     }
 
     @Test
