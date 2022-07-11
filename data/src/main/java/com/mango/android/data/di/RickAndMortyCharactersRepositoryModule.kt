@@ -1,6 +1,6 @@
 package com.mango.android.data.di
 
-import com.mango.android.data.dispatcher.DefaultCoroutineDispatcherProvider
+import com.mango.android.core.dispatcher.DefaultCoroutineDispatcherProvider
 import com.mango.android.data.mappers.CharactersMapper
 import com.mango.android.data.mappers.CurrentPageMapper
 import com.mango.android.data.repositories.RickAndMortyCharactersRepositoryImpl

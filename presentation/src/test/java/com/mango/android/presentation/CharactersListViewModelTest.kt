@@ -10,6 +10,7 @@ import com.mango.android.presentation.features.characterslist.viewmodel.Characte
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.RelaxedMockK
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.Before
@@ -17,10 +18,14 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestRule
 
+@ExperimentalCoroutinesApi
 class CharactersListViewModelTest {
 
     @get:Rule
     var rule: TestRule = InstantTaskExecutorRule()
+
+    @get:Rule
+    val coroutineScope = CoroutineScopeRule()
 
     @RelaxedMockK
     private lateinit var repository: RickAndMortyCharactersRepository
@@ -40,7 +45,7 @@ class CharactersListViewModelTest {
     }
 
     @Test
-    fun `when we ask a repository to get all characters and succeeds we get either right response`(): Unit = runBlocking {
+    fun `when we ask a repository to get all characters and succeeds we get either right response`() = coroutineScope.runBlocking {
         // Given
         coEvery {
             repository.getCharactersList(FAKE_CHARACTERS_LIST_ID, FAKE_CURRENT_PAGE)
@@ -48,17 +53,17 @@ class CharactersListViewModelTest {
 
         // When
         val liveDataUnderTest = viewModel.charactersListLiveData.testObserver()
-        viewModel.userRequireRefreshCharactersList()
+        viewModel.userRequireRefreshCharactersList(FAKE_CHARACTERS_LIST_ID)
 
         // Then
         with(liveDataUnderTest.observedValues) {
             size shouldBeEqualTo 1
-            get(0) shouldBeEqualTo fakeCharactersListUIModel
+            get(0) shouldBeEqualTo fakeCharactersListDomainModelFromApiResponse.map { charactersUIMapper.fromCharacterDomainModelToCharacterUIModel(it) }
         }
     }
 
     @Test
-    fun `when we ask a repository to get all characters and fails we get either left response`() : Unit = runBlocking {
+    fun `when we ask a repository to get all characters and fails we get either left response`() = coroutineScope.runBlocking {
         // Given
         coEvery {
             repository.getCharactersList(FAKE_CHARACTERS_LIST_ID, FAKE_CURRENT_PAGE)
@@ -66,7 +71,7 @@ class CharactersListViewModelTest {
 
         // When
         val liveDataUnderTest = viewModel.failure.testObserver()
-        viewModel.userRequireRefreshCharactersList()
+        viewModel.userRequireRefreshCharactersList(FAKE_CHARACTERS_LIST_ID)
 
         // Then
         with(liveDataUnderTest.observedValues) {
@@ -76,7 +81,7 @@ class CharactersListViewModelTest {
     }
 
     @Test
-    fun `when we ask a repository to get the current page and succeeds we get either right response`() : Unit = runBlocking {
+    fun `when we ask a repository to get the current page and succeeds we get either right response`() = coroutineScope.runBlocking {
         // Given
         coEvery {
             repository.getCurrentPage(FAKE_CHARACTERS_LIST_ID)
@@ -84,7 +89,7 @@ class CharactersListViewModelTest {
 
         // When
         val liveDataUnderTest = viewModel.currentPageLiveData.testObserver()
-        viewModel.getCurrentPage()
+        viewModel.getCurrentPage(FAKE_CHARACTERS_LIST_ID)
 
         // Then
         with(liveDataUnderTest.observedValues) {
@@ -94,7 +99,7 @@ class CharactersListViewModelTest {
     }
 
     @Test
-    fun `when we ask a repository to get the current page and fails we get either left response`() : Unit = runBlocking {
+    fun `when we ask a repository to get the current page and fails we get either left response`() = coroutineScope.runBlocking {
         // Given
         coEvery {
             repository.getCurrentPage(FAKE_CHARACTERS_LIST_ID)
@@ -102,7 +107,7 @@ class CharactersListViewModelTest {
 
         // When
         val liveDataUnderTest = viewModel.failure.testObserver()
-        viewModel.getCurrentPage()
+        viewModel.getCurrentPage(FAKE_CHARACTERS_LIST_ID)
 
         // Then
         with(liveDataUnderTest.observedValues) {

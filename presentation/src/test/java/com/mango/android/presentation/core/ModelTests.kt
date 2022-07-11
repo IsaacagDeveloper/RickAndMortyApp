@@ -28,7 +28,7 @@ val fakeCharactersListDomainModelFromApiResponse = listOf(fakeCharacterDomainMod
 
 val fakeCurrentPageModel = 1
 
-const val FAKE_CHARACTERS_LIST_ID = 1434
+const val FAKE_CHARACTERS_LIST_ID = 1
 const val FAKE_CURRENT_PAGE = 1
 
 val fakeCharacterUIModel = CharacterUIModel(

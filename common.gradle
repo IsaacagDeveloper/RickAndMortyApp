@@ -20,7 +20,7 @@ ext.androidModule = { isApplication = false ->
             versionName ApplicationConfig.versionName
 
             multiDexEnabled true
-            testInstrumentationRunner "com.mango.android.rickandmorty.core.MockTestRunner"
+            testInstrumentationRunner "com.mango.android.rickandmorty_cache.core.MockTestRunner"
             kapt.includeCompileClasspath = false
         }
 
