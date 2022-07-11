@@ -1,2 +1,8 @@
 rootProject.name = "Rick & Morty App"
 include ':app'
+include ':core'
+include ':data'
+include ':domain'
+include ':presentation'
+include ':rickandmorty_network'
+include ':rickandmorty_cache'

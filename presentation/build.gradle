@@ -1,0 +1,13 @@
+androidModule()
+
+apply plugin: 'androidx.navigation.safeargs.kotlin'
+
+dependencies {
+    implementation Libs.navigation_fragment_ktx
+    implementation Libs.navigation_ui
+    implementation Libs.swipe_refresh_layout
+    implementation Libs.glide
+    implementation Libs.lifecycle_extensions
+    implementation project(Modules.domain)
+    implementation project(Modules.core)
+}

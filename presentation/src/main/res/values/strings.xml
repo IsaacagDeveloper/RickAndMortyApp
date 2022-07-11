@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Rick &amp; Morty App</string>
+
+    <!-- Section detail information -->
+    <string name="section_personal_info_title">Personal information</string>
+    <string name="section_contact_title">Contact</string>
+    <string name="alive_subtitle">Is alive?</string>
+    <string name="species_subtitle">Species</string>
+    <string name="gender_subtitle">Gender</string>
+    <string name="origin_subtitle">Origin</string>
+    <string name="actual_location_subtitle">Actual Location</string>
+
+    <!-- Error Messages -->
+    <string name="something_wrong">Something went wrong, please, try again.</string>
+    <string name="empty_list">We haven\'t obtained characters, maybe something has happened in the laboratory.</string>
+
+    <!-- Navigations -->
+    <string name="characters_list_fragment_label">Characters List Fragment</string>
+    <string name="character_detail_fragment_label">Character Detail Fragment</string>
+</resources>

@@ -1,34 +1,17 @@
-plugins {
-    id 'com.android.application'
-}
+androidModule(true)
 
-android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.3"
-
-    defaultConfig {
-        applicationId "com.mango.android.rickmortyapp"
-        minSdkVersion 21
-        targetSdkVersion 30
-        versionCode 1
-        versionName "1.0"
-
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-}
+apply plugin: 'androidx.navigation.safeargs.kotlin'
 
 dependencies {
-    implementation 'com.android.support:appcompat-v7:28.0.0'
-    implementation 'com.android.support:recyclerview-v7:28.0.0'
+    implementation Libs.navigation_fragment_ktx
+    implementation Libs.navigation_ui
+    implementation Libs.appcompat
+    implementation Libs.material
+    implementation Libs.constraintlayout
+    implementation project(Modules.domain)
+    implementation project(Modules.core)
+    implementation project(Modules.data)
+    implementation project(Modules.rickandmortyNetwork)
+    implementation project(Modules.rickandmortyCache)
+    implementation project(Modules.presentation)
 }
