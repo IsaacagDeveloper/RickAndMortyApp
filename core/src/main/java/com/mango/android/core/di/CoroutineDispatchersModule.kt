@@ -1,7 +1,7 @@
-package com.mango.android.data.di
+package com.mango.android.core.di
 
-import com.mango.android.data.dispatcher.CoroutineDispatcherProvider
-import com.mango.android.data.dispatcher.DefaultCoroutineDispatcherProvider
+import com.mango.android.core.dispatcher.CoroutineDispatcherProvider
+import com.mango.android.core.dispatcher.DefaultCoroutineDispatcherProvider
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

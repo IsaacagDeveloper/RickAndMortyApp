@@ -1,6 +1,6 @@
 package com.mango.android.data.core
 
-import com.mango.android.data.dispatcher.CoroutineDispatcherProvider
+import com.mango.android.core.dispatcher.CoroutineDispatcherProvider
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

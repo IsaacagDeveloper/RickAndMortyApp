@@ -1,4 +1,4 @@
-package com.mango.android.data.dispatcher
+package com.mango.android.core.dispatcher
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers

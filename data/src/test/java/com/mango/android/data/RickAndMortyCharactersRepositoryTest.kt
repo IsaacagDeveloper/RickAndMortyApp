@@ -1,6 +1,7 @@
 package com.mango.android.data
 
-import com.mango.android.data.dispatcher.CoroutineDispatcherProvider
+import com.mango.android.core.core.Either
+import com.mango.android.data.core.*
 import com.mango.android.data.mappers.CharactersMapper
 import com.mango.android.data.mappers.CurrentPageMapper
 import com.mango.android.data.repositories.RickAndMortyCharactersRepositoryImpl
@@ -10,7 +11,6 @@ import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.impl.annotations.RelaxedMockK
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.Before
@@ -36,9 +36,6 @@ class RickAndMortyCharactersRepositoryTest {
     @RelaxedMockK
     private lateinit var charactersMapper: CharactersMapper
 
-    @RelaxedMockK
-    private lateinit var coroutinesDispatcher: CoroutineDispatcherProvider
-
     private lateinit var repository: RickAndMortyCharactersRepositoryImpl
 
     @Before
@@ -49,7 +46,7 @@ class RickAndMortyCharactersRepositoryTest {
             rickAndMortyCacheDataSource,
             currentPageMapper,
             charactersMapper,
-            coroutinesDispatcher
+            coroutineScope.testDispatcherProvider
         )
     }
 
@@ -64,10 +61,10 @@ class RickAndMortyCharactersRepositoryTest {
 
         //Then
         coVerify(exactly = 1) { rickAndMortyNetworkDataSource.getCharactersList(any()) }
-        result shouldBeEqualTo fakeCharactersListDomainModelFromApiResponse
+        result shouldBeEqualTo Either.Right(fakeCharactersListApiResponse.charactersList.map { charactersMapper.fromCharactersApiResponseToCharacterDomainModel(it) })
     }
 
-    @Test(expected = Exception::class)
+    @Test
     fun `when remote source fails we throw an exception`() = coroutineScope.runBlocking {
         //Given
         coEvery { rickAndMortyNetworkDataSource.getCharactersList(any()) } throws fakeException
@@ -77,8 +74,7 @@ class RickAndMortyCharactersRepositoryTest {
             repository.getCharactersList(ArgumentMatchers.anyInt(), ArgumentMatchers.anyInt())
 
         //Then
-        coVerify(exactly = 0) { rickAndMortyNetworkDataSource.getCharactersList(any()) }
-        result shouldBeEqualTo fakeException
+        result shouldBeEqualTo Either.Left(fakeFailure)
     }
 
     @Test
@@ -87,32 +83,22 @@ class RickAndMortyCharactersRepositoryTest {
         coEvery { rickAndMortyCacheDataSource.getCurrentPageForListID(FAKE_CHARACTERS_LIST_ID) } returns fakeCurrentPageDbModel
 
         //When
-        val result = repository.getCharactersList(FAKE_CHARACTERS_LIST_ID, FAKE_CURRENT_PAGE)
+        val result = repository.getCurrentPage(FAKE_CHARACTERS_LIST_ID)
 
         //Then
-        coVerify(exactly = 1) {
-            rickAndMortyCacheDataSource.getCurrentPageForListID(
-                FAKE_CHARACTERS_LIST_ID
-            )
-        }
-        result shouldBeEqualTo fakeCurrentPageDbModel
+        result shouldBeEqualTo Either.Right(fakeCurrentPageDbModel.currentPage)
     }
 
-    @Test(expected = Exception::class)
+    @Test
     fun `when local source fails we throw an exception`() = coroutineScope.runBlocking {
         //Given
         coEvery { rickAndMortyCacheDataSource.getCurrentPageForListID(FAKE_CHARACTERS_LIST_ID) } throws fakeException
 
         //When
-        val result = repository.getCharactersList(FAKE_CHARACTERS_LIST_ID, FAKE_CURRENT_PAGE)
+        val result = repository.getCurrentPage(FAKE_CHARACTERS_LIST_ID)
 
         //Then
-        coVerify(exactly = 0) {
-            rickAndMortyCacheDataSource.getCurrentPageForListID(
-                FAKE_CHARACTERS_LIST_ID
-            )
-        }
-        result shouldBeEqualTo fakeException
+        result shouldBeEqualTo Either.Left(fakeFailure)
     }
 
 }
