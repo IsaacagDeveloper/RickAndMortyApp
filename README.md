@@ -1,42 +1,87 @@
+# Rick And Morty: Characters
 
-# Rick & Morty App
+This is a technical test for the Mango company. The requirements were to develop an app that had a paginated list screen and a detail screen. As a bonus I have used Kotlin, I have cached the images with Glide, I have caught the exceptions that may occur and shown a general message. Finally, I cached the current page with Room, implemented unit and integration tests and tried to come up with a good design.
 
-## Technical test for Android
+#### Application
 
-In this repository you'll find a classic list/detail application. Code is messy, full of weakness and so outdated in terms of Android best practices. You mission is improving it as you want. Check it out, detect defects and try to solve them. Dealing with legacy code is endless task, so if you don't have enough time for apply all changes you'd like, please write it down and let us know.
+Now I will explain a about the app. It's done as a multi module app by following the clean architecture and using MVVM for the presentation layer. The app uses kotlin dsl for dependency management.
 
-> :warning: Please don't start project from scratch. You must iterate over current codebase. Fork the repository and send us your improved version.
+The apps tech stack is: LiveData, Room, ViewModels, Dagger Hilt, Constraint layout, ViewBinding, Glide, Coroutines, Jetpack Navigation and safe args, Retrofit, GSON, Material Design, Webmockserver, Mockk, Junit4, Kluent.
 
-Below you can see the technical stack we use at Mango. It would be nice if you're familiar with it, but we'll also glad if you show us something different or trendy. New tools are always welcome :smile:
+**LiveData**: I use it as a data container that can be observable that also respects the life cycles of the app components.
 
-- Kotlin
-- Kotlin DSL
-- MVVM + Databinding (old features)
-- MVI + Databinding (old features)
-- MVVM + Compose 
-- Architecture components
-- Retrofit
-- Coroutines (Although RxJava remains in some parts...)
-- MockK
-- Picasso
-- Jackson
-- Timber
-- Local store (realm, shared preferences, data store)
-- ConstraintLayout
-- Custom components designed by UX team
-- Deep links and App links
-- App modularization is in our roadmap. If you have experience in this area, you can show us what you know, up to you.
+*Link*: https://developer.android.com/topic/libraries/architecture/livedata?hl=es-419
 
-If you're not comfortable using that tools, no worries! Code as you fancy. The purpose is just having a space for discussing technical stuff together. For further doubts, please contact us at eqp.ecommerce.movilidad@mango.com
+**Room**: I use it to cache the information of the app. It is an extra layer that allows me to access the SQlite database.
 
-If you feel stuck and don't know how to start, there are some areas could be improved:
+*Link*: https://developer.android.com/training/data-storage/room
 
-- We're Kotlin first!
-- Still using Asyntask!
-- It seems like no SOLID principle is respected.
-- Too many responsabilities in the Activities. Split it out!
-- Just showing first 20 characters. Could network call be paginated?
-- UI is pretty simple. Show character's image!
-- There are no test :shit:
+**Dagger Hilt**: It is a dependency injection library that solves the Dagger 2 problem of repetitive work that we sometimes find. Also allows me to continue using the advantages of Dagger 2.
 
-We hope you enjoy dealing with :spaghetti: code!
+*Link*: https://developer.android.com/training/dependency-injection/hilt-android?hl=es-419
+
+**Constrant layout**: I use it for creating responsive layouts.
+
+*Link*: https://developer.android.com/training/constraint-layout?hl=es-419
+
+**ViewBinding**: I use it to communicate the fragment class to the views of the different layouts.
+
+*Link*: https://developer.android.com/topic/libraries/view-binding?hl=es-419
+
+**Glide**: I use it to cache and manage images.
+
+*Link*: https://github.com/bumptech/glide
+
+**Coroutines**: It is used to handle background tasks, long-running tasks, not blocking the UI, etc. Kotlin native for asynchronous programming.
+
+*Link*: https://developer.android.com/kotlin/coroutines
+
+**Navigation component & Save args**: It is used as a new method of navigation and data passing between screens. It has the problem that it only does "replace" and does not allow "add", so sometimes the screen may react as you did not want.
+
+*Link*:
+https://developer.android.com/guide/navigation/navigation-pass-data
+https://developer.android.com/guide/navigation/navigation-getting-started
+
+**Retrofit + OkHTTP**: Library that allows us to communicate with HTTP calls through an interface.
+
+*Link*: https://square.github.io/retrofit/
+
+**GSON**: I use it to convert JSON objects to Kotlin objects.
+
+*Link*: https://github.com/google/gson
+
+**MockWebServer**: It is used to create a web server in order to test HTTP calls.
+
+*Link*: https://github.com/square/okhttp/tree/master/mockwebserver
+
+**Mockk**: Kotlin library that allows you to create mock data objects of your application.
+
+*Link*: https://mockk.io/ANDROID.html
+
+**JUnit4**: It is a framework for performing and automating tests on Java/Kotlin applications.
+
+*Link*: https://developer.android.com/training/testing/instrumented-tests/androidx-test-libraries/rules
+
+**Kluent**: I use it for a more “human” test readability. It also uses Kotlin's own extension functions.
+
+*Link*: https://github.com/MarkusAmshove/Kluent
+
+#### Arquitecture
+
+I have based on the following image to create my interpretation of "Clean Architecture".
+
+![Example1](readmeResources/clean_architecture.jpeg)
+
+This is a summary of how I have structured the architecture, so that we can have something visual and quick to understand:
+
+![Example1](readmeResources/architecture_summary.jpg)
+
+It has a change because I didn't find necessary to create usecases for the business logic of this app.
+
+#### Images
+
+Finally, here are the images of the app:
+
+![Example1](readmeResources/characters_list_screen.png)
+
+![Example1](readmeResources/character_detail_screen.png)

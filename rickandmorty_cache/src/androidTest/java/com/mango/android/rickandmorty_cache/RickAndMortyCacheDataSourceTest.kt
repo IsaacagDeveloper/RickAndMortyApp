@@ -78,7 +78,7 @@ class RickAndMortyCacheDataSourceTest {
     }
 
     @Test(expected = SQLiteConstraintException::class)
-    fun shouldGetExceptionWhenInsertOompaLoompasToDB() {
+    fun shouldGetExceptionWhenInsertCharactersToDB() {
         runBlocking {
             // Given
             rickAndMortyCacheDataSource.insertListCurrentPageToDB(fakeCurrentPageDbModel)
@@ -110,7 +110,7 @@ class RickAndMortyCacheDataSourceTest {
 
         @Provides
         @Singleton
-        fun provideMarvelDao(db: RickAndMortyDatabase) : RickAndMortyDao = db.rickAndMortyDao()
+        fun provideRickAndMortyDao(db: RickAndMortyDatabase) : RickAndMortyDao = db.rickAndMortyDao()
 
         @Singleton
         @Provides
