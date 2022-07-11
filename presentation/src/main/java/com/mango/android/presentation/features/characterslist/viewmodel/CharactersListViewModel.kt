@@ -22,7 +22,7 @@ private const val CHARACTERS_LIST_ID = 1
 class CharactersListViewModel @Inject constructor(
     private val repository: RickAndMortyCharactersRepository,
     private val charactersUIMapper: CharactersUIMapper
-): ViewModel(), FailureViewModel by FailureViewModelImpl() {
+) : ViewModel(), FailureViewModel by FailureViewModelImpl() {
 
     private val _charactersListLiveData = MutableLiveData<List<CharacterUIModel>>()
     val charactersListLiveData: LiveData<List<CharacterUIModel>>
@@ -37,9 +37,9 @@ class CharactersListViewModel @Inject constructor(
     }
 
     fun getCurrentPage() = viewModelScope.launch {
-            repository.getCurrentPage(CHARACTERS_LIST_ID)
-                .fold(::handleFailure, ::handleCurrentPage)
-        }
+        repository.getCurrentPage(CHARACTERS_LIST_ID)
+            .fold(::handleFailure, ::handleCurrentPage)
+    }
 
     private fun handleCurrentPage(currentPage: Int) {
         _currentPageLiveData.postValue(currentPage)
@@ -63,11 +63,20 @@ class CharactersListViewModel @Inject constructor(
     }
 
     private fun handleCharactersList(collection: List<Character>) {
-        _charactersListLiveData.postValue(
-            collection.map {
-                charactersUIMapper.fromCharacterDomainModelToCharacterUIModel(it)
-            }
-        )
+        if (charactersListLiveData.value != null) {
+            _charactersListLiveData.postValue(
+                _charactersListLiveData.value?.plus(collection.map {
+                    charactersUIMapper.fromCharacterDomainModelToCharacterUIModel(it)
+                })
+            )
+        } else {
+            _charactersListLiveData.postValue(
+                collection.map {
+                    charactersUIMapper.fromCharacterDomainModelToCharacterUIModel(it)
+                }
+            )
+        }
+
         getCurrentPage()
     }
 

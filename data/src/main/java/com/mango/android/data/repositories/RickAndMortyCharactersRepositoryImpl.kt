@@ -64,7 +64,7 @@ class RickAndMortyCharactersRepositoryImpl @Inject constructor(
             try {
                 val result = rickAndMortyCacheDataSource.getCurrentPageForListID(listID)
                 if (result.currentPage != 0) {
-                    Either.Right(result.currentPage)
+                    Either.Right(currentPageMapper.fromCurrentPageDbModelToPage(result))
                 } else {
                     Either.Left(Failure.EmptyResponse)
                 }
