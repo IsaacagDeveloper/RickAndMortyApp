@@ -20,7 +20,7 @@ ext.androidModule = { isApplication = false ->
             versionName ApplicationConfig.versionName
 
             multiDexEnabled true
-            testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+            testInstrumentationRunner "com.mango.android.rickandmorty.core.MockTestRunner"
         }
 
         buildTypes {
