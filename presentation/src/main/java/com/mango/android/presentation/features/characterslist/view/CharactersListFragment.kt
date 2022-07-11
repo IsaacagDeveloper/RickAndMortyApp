@@ -15,6 +15,8 @@ import com.mango.android.presentation.features.characterslist.view.adapter.Chara
 import com.mango.android.presentation.features.characterslist.viewmodel.CharactersListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
+private const val CHARACTERS_LIST_ID = 1
+
 @AndroidEntryPoint
 class CharactersListFragment : Fragment(R.layout.fragment_characters_list) {
 
@@ -43,6 +45,7 @@ class CharactersListFragment : Fragment(R.layout.fragment_characters_list) {
         val binding = FragmentCharactersListBinding.bind(view)
         _fragmentCharactersListBinding = binding
 
+        charactersListViewModel.getCurrentPage(CHARACTERS_LIST_ID)
         initializeView()
         loadCharacters()
     }
@@ -68,16 +71,16 @@ class CharactersListFragment : Fragment(R.layout.fragment_characters_list) {
 
     private fun setUpRefreshingCharacters() {
         fragmentCharactersListBinding.swipeRefreshLayout.setOnRefreshListener {
-            charactersListViewModel.userRequireRefreshCharactersList()
+            charactersListViewModel.userRequireRefreshCharactersList(CHARACTERS_LIST_ID)
         }
     }
 
     private fun loadCharacters() {
         fragmentCharactersListBinding.progressBar.visible()
         charactersListViewModel.currentPageLiveData.value?.let {
-            charactersListViewModel.getCharacters(it)
+            charactersListViewModel.getCharacters(CHARACTERS_LIST_ID, it)
         } ?: run {
-            charactersListViewModel.userRequireGetNewCharacters()
+            charactersListViewModel.userRequireGetNewCharacters(CHARACTERS_LIST_ID)
         }
     }
 
@@ -89,6 +92,7 @@ class CharactersListFragment : Fragment(R.layout.fragment_characters_list) {
         } else {
             charactersListAdapter.submitList(collection)
         }
+        charactersListViewModel.getCurrentPage(CHARACTERS_LIST_ID)
     }
 
     private fun handleFailure(failure: Failure?) {
@@ -113,7 +117,7 @@ class CharactersListFragment : Fragment(R.layout.fragment_characters_list) {
     }
 
     private fun closeToEndOfList() {
-        charactersListViewModel.userRequireGetNewCharacters()
+        charactersListViewModel.userRequireGetNewCharacters(CHARACTERS_LIST_ID)
     }
 
     override fun onDestroyView() {

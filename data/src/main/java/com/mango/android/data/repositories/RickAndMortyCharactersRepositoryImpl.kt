@@ -2,7 +2,7 @@ package com.mango.android.data.repositories
 
 import com.mango.android.core.core.Either
 import com.mango.android.core.core.Failure
-import com.mango.android.data.dispatcher.CoroutineDispatcherProvider
+import com.mango.android.core.dispatcher.CoroutineDispatcherProvider
 import com.mango.android.data.mappers.CharactersMapper
 import com.mango.android.data.mappers.CurrentPageMapper
 import com.mango.android.domain.models.Character
@@ -74,10 +74,14 @@ class RickAndMortyCharactersRepositoryImpl @Inject constructor(
         }
 
     override suspend fun insertListCurrentPageToDB(listID: Int, currentPage: Int) =
-        rickAndMortyCacheDataSource.insertListCurrentPageToDB(
-            currentPageMapper.fromListIDAndPageDomainModelToCurrentPageDbModel(listID, currentPage)
-        )
+        withContext(coroutineDispatcher.io) {
+            rickAndMortyCacheDataSource.insertListCurrentPageToDB(
+                currentPageMapper.fromListIDAndPageDomainModelToCurrentPageDbModel(listID, currentPage)
+            )
+        }
 
     override suspend fun deleteAllListsCurrentPagesFromDB() =
-        rickAndMortyCacheDataSource.deleteAllListsCurrentPagesFromDB()
+        withContext(coroutineDispatcher.io) {
+            rickAndMortyCacheDataSource.deleteAllListsCurrentPagesFromDB()
+        }
 }

@@ -1,5 +1,6 @@
 package com.mango.android.data.core
 
+import com.mango.android.core.core.Failure
 import com.mango.android.domain.models.Character
 import com.mango.android.rickandmorty_cache.models.CurrentPageDbModel
 import com.mango.android.rickandmorty_network.models.*
@@ -106,7 +107,7 @@ val fakeCurrentPageDbModel by lazy {
     )
 }
 
-const val FAKE_CHARACTERS_LIST_ID = 1434
+const val FAKE_CHARACTERS_LIST_ID = 1
 const val FAKE_CURRENT_PAGE = 1
 
 /**
@@ -132,3 +133,4 @@ val fakeCharactersListDomainModelFromApiResponse = listOf(fakeCharacterDomainMod
  */
 const val fakeErrorName = "Error getting response"
 val fakeException = Exception(fakeErrorName)
+val fakeFailure = Failure.ServerError

@@ -16,8 +16,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-private const val CHARACTERS_LIST_ID = 1
-
 @HiltViewModel
 class CharactersListViewModel @Inject constructor(
     private val repository: RickAndMortyCharactersRepository,
@@ -32,33 +30,29 @@ class CharactersListViewModel @Inject constructor(
     val currentPageLiveData: LiveData<Int>
         get() = _currentPageLiveData
 
-    init {
-        getCurrentPage()
-    }
-
-    fun getCurrentPage() = viewModelScope.launch {
-        repository.getCurrentPage(CHARACTERS_LIST_ID)
-            .fold(::handleFailure, ::handleCurrentPage)
-    }
+    fun getCurrentPage(listID: Int) = viewModelScope.launch {
+            repository.getCurrentPage(listID)
+                .fold(::handleFailure, ::handleCurrentPage)
+        }
 
     private fun handleCurrentPage(currentPage: Int) {
         _currentPageLiveData.postValue(currentPage)
     }
 
-    fun userRequireGetNewCharacters() {
+    fun userRequireGetNewCharacters(listID: Int) {
         currentPageLiveData.value?.let {
-            getCharacters(it.plus(1))
+            getCharacters(listID, it.plus(1))
         } ?: run {
-            userRequireRefreshCharactersList()
+            userRequireRefreshCharactersList(listID)
         }
     }
 
-    fun userRequireRefreshCharactersList() {
-        getCharacters(FIRST_PAGE)
+    fun userRequireRefreshCharactersList(listID: Int) {
+        getCharacters(listID, FIRST_PAGE)
     }
 
-    fun getCharacters(page: Int) = viewModelScope.launch {
-        repository.getCharactersList(CHARACTERS_LIST_ID, page)
+    fun getCharacters(listID: Int, page: Int) = viewModelScope.launch {
+        repository.getCharactersList(listID, page)
             .fold(::handleFailure, ::handleCharactersList)
     }
 
@@ -76,8 +70,6 @@ class CharactersListViewModel @Inject constructor(
                 }
             )
         }
-
-        getCurrentPage()
     }
 
 }
