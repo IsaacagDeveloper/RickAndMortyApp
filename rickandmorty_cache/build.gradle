@@ -1,7 +1,7 @@
 androidModule()
 
 dependencies {
-    implementation Libs.room_compiler
+    kapt Libs.room_compiler
     implementation Libs.room_ktx
     implementation Libs.room_runtime
     implementation project(Modules.core)
