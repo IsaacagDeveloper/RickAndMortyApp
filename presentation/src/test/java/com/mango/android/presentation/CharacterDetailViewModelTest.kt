@@ -8,6 +8,7 @@ import com.mango.android.presentation.features.characterdetail.viewmodel.Charact
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.RelaxedMockK
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.Before
@@ -15,10 +16,14 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestRule
 
+@ExperimentalCoroutinesApi
 class CharacterDetailViewModelTest {
 
     @get:Rule
     var rule: TestRule = InstantTaskExecutorRule()
+
+    @get:Rule
+    val coroutineScope = CoroutineScopeRule()
 
     @RelaxedMockK
     private lateinit var repository: RickAndMortyCharactersRepository
@@ -34,7 +39,7 @@ class CharacterDetailViewModelTest {
     }
 
     @Test
-    fun `when we ask a repository to get character detail info and succeeds we get either right response`(): Unit = runBlocking {
+    fun `when we ask a repository to get character detail info and succeeds we get either right response`() = coroutineScope.runBlocking {
         // Given
         coEvery {
             repository.getCharacterDetailInformation(FAKE_CHARACTER_ID)
@@ -52,7 +57,7 @@ class CharacterDetailViewModelTest {
     }
 
     @Test
-    fun `when we ask a repository to get character detail info and fails we get either left response`() : Unit = runBlocking {
+    fun `when we ask a repository to get character detail info and fails we get either left response`() = coroutineScope.runBlocking {
         // Given
         coEvery {
             repository.getCharacterDetailInformation(FAKE_CHARACTER_ID)
